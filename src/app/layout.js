@@ -28,6 +28,9 @@ export const metadata = {
   creator: "Amalendu Pandey",
   verification: {
     google: "ZHwm9eaXHsawn5oOvujVl0LQmA4HqJVG6Mrf5jZuQz4",
+    other: {
+      "google-site-verification": "ZHwm9eaXHsawn5oOvujVl0LQmA4HqJVG6Mrf5jZuQz4",
+    },
   },
   openGraph: {
     type: "website",
@@ -39,7 +42,7 @@ export const metadata = {
     siteName: "ProResume Builder",
     images: [
       {
-        url: "/image.png", // TODO: Add a 1200x630 screenshot of your app to your /public folder
+        url: "/image.png",
         width: 1200,
         height: 630,
         alt: "ProResume Builder Preview",
