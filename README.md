@@ -54,17 +54,17 @@ To run this project locally on your machine, follow these steps:
 
 ### 1\. Clone the repository
 
-    git clone https://github.com/amalendu315/proresume-builder `
+    git clone https://github.com/amalendu315/proresume-builder 
 
-    cd proresume-builder   `
+    cd proresume-builder   
 
 ### 2\. Install dependencies
 
-    `pnpm install   `
+    pnpm install   
 
 ### 3\. Run the development server
 
-    `pnpm dev   `
+    pnpm dev   `
 
 Open [http://localhost:3000](https://www.google.com/search?q=http://localhost:3000) with your browser to see the builder in action.
 
