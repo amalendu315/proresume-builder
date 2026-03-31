@@ -1,5 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 // 1. DYNAMIC METADATA
@@ -71,6 +71,7 @@ export default function RootLayout({ children }) {
 
         {/* Vercel Analytics tracking injected at the root level */}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
