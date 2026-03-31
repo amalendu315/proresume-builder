@@ -3,10 +3,16 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import Footer from "@/components/shared/footer";
 
+// 0. VIEWPORT CONFIGURATION (For PWA Theme Color)
+export const viewport = {
+  themeColor: "#2563eb",
+};
+
 // 1. DYNAMIC METADATA
 // This tells Google and social media exactly what your site is about
 export const metadata = {
   metadataBase: new URL("https://proresume-builder.vercel.app"), // TODO: Replace with your actual Vercel domain
+  manifest: "/manifest.json", // <-- Added this line for PWA support
   title: {
     default: "ProResume Builder | Free ATS-Friendly Resume Maker",
     template: "%s | ProResume Builder",

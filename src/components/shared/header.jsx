@@ -110,21 +110,21 @@ export default function Header({ rightControls }) {
             onClick={() => setIsMobileMenuOpen(false)}
             className="text-zinc-600 hover:text-zinc-900 font-medium py-2"
           >
-            About
+            About Us
           </a>
           <a
             href="/vision"
             onClick={() => setIsMobileMenuOpen(false)}
             className="text-zinc-600 hover:text-zinc-900 font-medium py-2"
           >
-            Vision
+            Our Vision
           </a>
           <a
             href="/contact"
             onClick={() => setIsMobileMenuOpen(false)}
             className="text-zinc-600 hover:text-zinc-900 font-medium py-2"
           >
-            Contact
+            Contact Us
           </a>
         </div>
       )}
