@@ -28,9 +28,6 @@ export const metadata = {
   creator: "Amalendu Pandey",
   verification: {
     google: "ZHwm9eaXHsawn5oOvujVl0LQmA4HqJVG6Mrf5jZuQz4",
-    other: {
-      "google-site-verification": "ZHwm9eaXHsawn5oOvujVl0LQmA4HqJVG6Mrf5jZuQz4",
-    },
   },
   openGraph: {
     type: "website",
