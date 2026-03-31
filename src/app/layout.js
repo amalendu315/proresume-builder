@@ -26,6 +26,7 @@ export const metadata = {
     { name: "Amalendu Pandey", url: "https://amalendu-pandey.vercel.app" },
   ],
   creator: "Amalendu Pandey",
+  googleSiteVerification: "ZHwm9eaXHsawn5oOvujVl0LQmA4HqJVG6Mrf5jZuQz4",
   openGraph: {
     type: "website",
     locale: "en_US",
