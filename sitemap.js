@@ -3,7 +3,7 @@
 // Submit this exact URL to Google Search Console to tell Google to index your site.
 
 export default function sitemap() {
-  const baseUrl = ""; // TODO: Replace with your actual domain
+  const baseUrl = "https://proresume-builder.vercel.app/"; // TODO: Replace with your actual domain
 
   return [
     {

@@ -3,7 +3,7 @@
 
 **ProResume Builder** is a completely free, open-source, and highly customizable resume builder designed to bridge the gap in the market. Most modern resume builders put multi-page, professional layouts behind a premium paywall. This project aims to provide premium-grade, ATS-friendly, and highly extensible resumes for everyone—at zero cost.
 
-🌐 [**Live Demo**](https://www.google.com/search?q=https://proresume-builder.vercel.app) _(Replace with your actual Vercel link)_
+🌐 [**Live Demo**](https://proresume-builder.vercel.app) _(Replace with your actual Vercel link)_
 
 ✨ Key Features
 --------------

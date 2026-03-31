@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+import Footer from "@/components/shared/footer";
 
 // 1. DYNAMIC METADATA
 // This tells Google and social media exactly what your site is about
@@ -68,7 +69,7 @@ export default function RootLayout({ children }) {
       <body className="antialiased bg-zinc-100">
         {/* Your main app content */}
         {children}
-
+        <Footer />
         {/* Vercel Analytics tracking injected at the root level */}
         <Analytics />
         <SpeedInsights />

@@ -3,7 +3,7 @@
 // It tells web crawlers (like Googlebot) which pages they are allowed to scan.
 
 export default function robots() {
-  const baseUrl = ""; // TODO: Replace with your actual domain
+  const baseUrl = "https://proresume-builder.vercel.app/"; // TODO: Replace with your actual domain
 
   return {
     rules: {
