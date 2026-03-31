@@ -17,6 +17,8 @@ import {
   Phone,
   MapPin,
   Globe,
+  Eye,
+  FileEdit,
 } from "lucide-react";
 import Header from "@/components/shared/header";
 
@@ -205,8 +207,18 @@ function BuilderContent() {
   const [template, setTemplate] = useState(defaultTemplate);
   const [openSection, setOpenSection] = useState("personal");
 
+  // Mobile tab state to toggle between editing and previewing
+  const [mobileTab, setMobileTab] = useState("editor");
+
   const handlePrint = () => {
-    window.print();
+    // Switch to preview just in case they are on mobile edit view before printing
+    if (mobileTab !== "preview") {
+      setMobileTab("preview");
+      // Small delay to allow rendering before print dialog opens
+      setTimeout(() => window.print(), 100);
+    } else {
+      window.print();
+    }
   };
 
   const updatePersonal = (field, value) => {
@@ -242,15 +254,13 @@ function BuilderContent() {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Creates a temporary, local browser URL for the uploaded file.
-      // This is NEVER sent to a server.
       const imageUrl = URL.createObjectURL(file);
       updatePersonal("profileImage", imageUrl);
     }
   };
 
   return (
-    <div className="flex min-h-screen bg-zinc-100 font-sans overflow-hidden">
+    <div className="flex flex-col h-screen bg-zinc-100 font-sans overflow-hidden">
       {/* HEADER (Hidden when printing) */}
       <Header
         rightControls={
@@ -282,11 +292,60 @@ function BuilderContent() {
         }
       />
 
+      {/* MOBILE TOGGLE NAVIGATION (Fixed at bottom) */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center bg-zinc-900 rounded-full p-1.5 shadow-2xl lg:hidden print:hidden border border-zinc-700">
+        <button
+          onClick={() => setMobileTab("editor")}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+            mobileTab === "editor"
+              ? "bg-white text-zinc-900 shadow-sm"
+              : "text-zinc-400 hover:text-white"
+          }`}
+        >
+          <FileEdit size={16} /> Edit
+        </button>
+        <button
+          onClick={() => setMobileTab("preview")}
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+            mobileTab === "preview"
+              ? "bg-white text-zinc-900 shadow-sm"
+              : "text-zinc-400 hover:text-white"
+          }`}
+        >
+          <Eye size={16} /> Preview
+        </button>
+      </div>
+
       {/* MAIN LAYOUT */}
-      <main className="flex w-full pt-16 h-full">
-        {/* LEFT PANE: FORM BUILDER (Hidden when printing) */}
-        <div className="w-full lg:w-[45%] h-full overflow-y-auto bg-zinc-50/50 p-6 border-r border-zinc-200 print:hidden pb-24 custom-scrollbar">
+      <main className="flex w-full pt-16 flex-1 h-[calc(100vh-4rem)]">
+        {/* LEFT PANE: FORM BUILDER */}
+        <div
+          className={`w-full lg:w-[45%] h-full overflow-y-auto bg-zinc-50/50 p-4 sm:p-6 border-r border-zinc-200 print:hidden pb-32 custom-scrollbar 
+          ${mobileTab === "editor" ? "block" : "hidden lg:block"}`}
+        >
           <div className="max-w-xl mx-auto space-y-2">
+            {/* Mobile Template Selector (Visible only on mobile editor) */}
+            <div className="md:hidden bg-white p-4 rounded-lg border border-zinc-200 shadow-sm mb-6 flex flex-col gap-2">
+              <label className="text-sm font-semibold text-zinc-700 flex items-center gap-2">
+                <LayoutTemplate size={16} className="text-zinc-500" /> Choose
+                Template
+              </label>
+              <select
+                value={template}
+                onChange={(e) => setTemplate(e.target.value)}
+                className="h-10 rounded-md border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 cursor-pointer"
+              >
+                <option value="minimalist">Minimalist (ATS)</option>
+                <option value="modern">Modern Sidebar</option>
+                <option value="professional">Professional Classic</option>
+                <option value="executive">Executive Split</option>
+                <option value="creative">Creative Accent</option>
+                <option value="image-modern">Image - Sidebar</option>
+                <option value="image-classic">Image - Classic</option>
+                <option value="image-creative">Image - Studio</option>
+              </select>
+            </div>
+
             <AccordionItem
               title="Personal Details"
               icon={User}
@@ -378,7 +437,7 @@ function BuilderContent() {
                 setOpenSection(openSection === "experience" ? "" : "experience")
               }
             >
-              {data.experience.map((exp, index) => (
+              {data.experience.map((exp) => (
                 <div
                   key={exp.id}
                   className="p-4 border border-zinc-200 rounded-md bg-zinc-50 mb-4 relative group"
@@ -653,16 +712,21 @@ function BuilderContent() {
           </div>
         </div>
 
-        {/* RIGHT PANE: LIVE PREVIEW (Becomes full screen when printing) */}
-        <div className="hidden lg:flex w-[55%] h-full bg-zinc-400/20 p-8 overflow-y-auto print:flex print:w-full print:p-0 print:bg-white print:overflow-visible justify-center custom-scrollbar">
-          {/* A4 Page Container */}
-          <div className="bg-white shadow-2xl print:shadow-none w-full max-w-[21cm] min-h-[29.7cm] print:max-w-none print:w-full mx-auto text-zinc-900 transition-all duration-300 relative print:m-0">
-            <ResumeTemplate data={data} template={template} />
+        {/* RIGHT PANE: LIVE PREVIEW */}
+        <div
+          className={`w-full lg:w-[55%] h-full bg-zinc-300/40 overflow-auto print:flex print:w-full print:p-0 print:bg-white print:overflow-visible custom-scrollbar
+          ${mobileTab === "preview" ? "block" : "hidden lg:block"}`}
+        >
+          {/* Scrollable container for mobile to ensure the A4 page doesn't shrink or squish */}
+          <div className="w-full min-w-min p-4 lg:p-8 flex justify-center pb-32">
+            <div className="bg-white shadow-2xl print:shadow-none w-[21cm] min-w-[21cm] min-h-[29.7cm] print:min-w-0 print:max-w-none print:w-full text-zinc-900 transition-all duration-300 relative print:m-0 shrink-0">
+              <ResumeTemplate data={data} template={template} />
+            </div>
           </div>
         </div>
       </main>
 
-      {/* Tailwind Print Styles explicitly added via style tag for strict enforcement */}
+      {/* Tailwind Print Styles */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -671,7 +735,7 @@ function BuilderContent() {
           body { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: white !important; }
           .custom-scrollbar::-webkit-scrollbar { display: none; }
         }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
@@ -682,7 +746,7 @@ function BuilderContent() {
   );
 }
 
-// --- MAIN APPLICATION ---
+// --- MAIN APPLICATION ENTRY ---
 export default function App() {
   return (
     <Suspense fallback={<div>Loading builder...</div>}>
