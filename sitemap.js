@@ -3,21 +3,19 @@
 // Submit this exact URL to Google Search Console to tell Google to index your site.
 
 export default function sitemap() {
-  const baseUrl = "https://proresume-builder.vercel.app/"; // TODO: Replace with your actual domain
-
+  const baseUrl = "https://proresume-builder.vercel.app"; 
   return [
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1, // 1 is the highest priority, indicating this is the most important page
+      changeFrequency: "monthly",
+      priority: 1,
     },
-    // If you add a /templates or /about page later, you would add them here:
-    // {
-    //   url: `${baseUrl}/templates`,
-    //   lastModified: new Date(),
-    //   changeFrequency: 'monthly',
-    //   priority: 0.8,
-    // },
+    {
+      url: `${baseUrl}/templates`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
   ];
 }

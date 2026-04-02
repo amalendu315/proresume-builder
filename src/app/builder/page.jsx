@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { useState, Suspense, useEffect } from "react";
+// import { useSearchParams } from "next/navigation"; // Uncomment for your real app
 import {
   Download,
   Plus,
@@ -19,8 +19,26 @@ import {
   Globe,
   Eye,
   FileEdit,
+  MonitorDown,
+  Wand2,
+  X,
+  Loader2,
 } from "lucide-react";
-import Header from "@/components/shared/header";
+// import Header from "@/components/shared/header"; // Uncomment for your real app
+
+// --- MOCKS FOR CANVAS PREVIEW ---
+// Please delete these mocks when pasting into your Next.js app!
+const useSearchParams = () => ({ get: (param) => null });
+const Header = ({ rightControls }) => (
+  <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-white border-b border-zinc-200 text-zinc-500 font-medium flex justify-between items-center px-6 print:hidden shadow-sm">
+    <div className="flex items-center gap-2">
+      <LayoutTemplate size={20} className="text-zinc-900" />
+      <span className="font-bold text-zinc-900">ProResume</span>
+    </div>
+    {rightControls && <div className="flex items-center">{rightControls}</div>}
+  </header>
+);
+// --------------------------------
 
 // --- CUSTOM BRAND ICONS (Since lucide-react removed them) ---
 const GithubIcon = ({ size = 24, className = "" }) => (
@@ -60,7 +78,7 @@ const LinkedinIcon = ({ size = 24, className = "" }) => (
   </svg>
 );
 
-// --- INITIAL DATA (Pre-filled for Amalendu) ---
+// --- INITIAL DATA ---
 const initialData = {
   personal: {
     fullName: "Amalendu Pandey",
@@ -127,7 +145,7 @@ const initialData = {
     "JavaScript, TypeScript, React.js, Next.js, Node.js, Express, MongoDB, Cyber Security, Tailwind CSS, API Design, Git/GitHub",
 };
 
-// --- UI COMPONENTS (Shadcn-inspired) ---
+// --- UI COMPONENTS ---
 const Input = ({ label, ...props }) => (
   <div className="flex flex-col gap-1.5 w-full">
     {label && (
@@ -207,17 +225,168 @@ function BuilderContent() {
   const [template, setTemplate] = useState(defaultTemplate);
   const [openSection, setOpenSection] = useState("personal");
 
-  // Mobile tab state to toggle between editing and previewing
   const [mobileTab, setMobileTab] = useState("editor");
 
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstallable, setIsInstallable] = useState(false);
+
+  // --- AI IMPORT STATE ---
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  const [aiInputText, setAiInputText] = useState("");
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const [aiError, setAiError] = useState(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt,
+      );
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === "accepted") {
+      setIsInstallable(false);
+    }
+    setDeferredPrompt(null);
+  };
+
   const handlePrint = () => {
-    // Switch to preview just in case they are on mobile edit view before printing
     if (mobileTab !== "preview") {
       setMobileTab("preview");
-      // Small delay to allow rendering before print dialog opens
       setTimeout(() => window.print(), 100);
     } else {
       window.print();
+    }
+  };
+
+  // --- GEMINI AI AUTO-FILL LOGIC ---
+  const handleAiImport = async () => {
+    if (!aiInputText.trim()) {
+      setAiError("Please paste your resume text first.");
+      return;
+    }
+
+    setIsAiLoading(true);
+    setAiError(null);
+
+    const apiKey = process.env.GEMINI_API_KEY
+      ? process.env.GEMINI_API_KEY
+      : "AIzaSyBbcHYvBa0HWBBq6gsLdkFYnGJAuYGM8H4"; // API key is provided dynamically by the execution environment
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
+
+    const payload = {
+      contents: [
+        {
+          parts: [
+            {
+              text: `Extract and structure the following raw resume text into the required fields. Do not invent information. If a field is missing, leave it blank. \n\nResume Text:\n${aiInputText}`,
+            },
+          ],
+        },
+      ],
+      systemInstruction: {
+        parts: [
+          {
+            text: `You are an expert resume data extractor. Parse the provided resume text into a structured JSON format exactly matching this schema. Return ONLY valid JSON.
+          Schema:
+          {
+            "personal": { "fullName": "", "role": "", "email": "", "phone": "", "location": "", "website": "", "github": "", "linkedin": "" },
+            "summary": "Professional summary or objective here",
+            "experience": [ { "company": "", "role": "", "startDate": "e.g., Jan 2020", "endDate": "e.g., Present", "description": "Bullet points of experience" } ],
+            "education": [ { "school": "", "degree": "", "year": "e.g., 2016-2020", "details": "" } ],
+            "projects": [ { "name": "", "techStack": "", "link": "", "description": "" } ],
+            "skills": "Comma separated list of skills here"
+          }`,
+          },
+        ],
+      },
+      generationConfig: {
+        responseMimeType: "application/json",
+      },
+    };
+
+    // Implements exponential backoff retry mechanism (1s, 2s, 4s, 8s, 16s)
+    const fetchWithRetry = async (retries = 5, delay = 1000) => {
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error("API request failed");
+
+        const result = await response.json();
+        const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (jsonText) {
+          const parsed = JSON.parse(jsonText);
+
+          // Generate unique IDs for the mapped array items
+          const generateId = () => Math.random().toString(36).substr(2, 9);
+
+          if (parsed.experience)
+            parsed.experience.forEach((e) => (e.id = generateId()));
+          if (parsed.education)
+            parsed.education.forEach((e) => (e.id = generateId()));
+          if (parsed.projects)
+            parsed.projects.forEach((e) => (e.id = generateId()));
+
+          // Preserve the existing profile image so it doesn't get wiped out
+          if (parsed.personal) {
+            parsed.personal.profileImage = data.personal.profileImage || "";
+          }
+
+          return parsed;
+        }
+        throw new Error("Invalid response format");
+      } catch (err) {
+        if (retries > 0) {
+          await new Promise((r) => setTimeout(r, delay));
+          return fetchWithRetry(retries - 1, delay * 2);
+        }
+        throw err;
+      }
+    };
+
+    try {
+      const newData = await fetchWithRetry();
+      if (newData) {
+        // Safely merge with initialData structure in case AI missed arrays
+        setData({
+          personal: {
+            ...initialData.personal,
+            ...newData.personal,
+            profileImage: data.personal.profileImage,
+          },
+          summary: newData.summary || "",
+          experience: newData.experience || [],
+          education: newData.education || [],
+          projects: newData.projects || [],
+          skills: newData.skills || "",
+        });
+        setIsAiModalOpen(false);
+        setAiInputText(""); // Clear text
+      }
+    } catch (err) {
+      setAiError(
+        "We couldn't process the resume text. Please check your internet connection or try pasting a different format.",
+      );
+    } finally {
+      setIsAiLoading(false);
     }
   };
 
@@ -260,11 +429,89 @@ function BuilderContent() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-zinc-100 font-sans overflow-hidden">
+    <div className="flex flex-col h-screen bg-zinc-100 font-sans overflow-hidden relative">
+      {/* AI IMPORT MODAL */}
+      {isAiModalOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-zinc-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="p-6 border-b border-zinc-200 flex items-center justify-between bg-zinc-50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                  <Wand2 size={20} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-zinc-900 leading-tight">
+                    AI Auto-Fill
+                  </h2>
+                  <p className="text-xs text-zinc-500">
+                    Paste your old resume text, and we'll organize it.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => !isAiLoading && setIsAiModalOpen(false)}
+                className="p-2 text-zinc-400 hover:text-zinc-700 hover:bg-zinc-200 rounded-full transition-colors disabled:opacity-50"
+                disabled={isAiLoading}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="p-6 overflow-y-auto flex-grow">
+              <p className="text-sm text-zinc-600 mb-4">
+                Open your existing resume (PDF, Word, or LinkedIn profile),
+                highlight all the text, copy it, and paste it below. Our AI will
+                automatically extract the fields.
+              </p>
+              <textarea
+                className="w-full h-64 p-4 border border-zinc-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none disabled:bg-zinc-50 disabled:text-zinc-400"
+                placeholder="e.g. John Doe\nSoftware Engineer\nExperience:\n- Built a React application..."
+                value={aiInputText}
+                onChange={(e) => setAiInputText(e.target.value)}
+                disabled={isAiLoading}
+              ></textarea>
+
+              {aiError && (
+                <div className="mt-4 p-3 bg-red-50 text-red-700 border border-red-200 rounded-lg text-sm flex items-start gap-2">
+                  <span className="font-bold shrink-0">Error:</span>
+                  <span>{aiError}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="p-6 border-t border-zinc-200 bg-zinc-50 flex justify-end gap-3 shrink-0">
+              <Button
+                variant="ghost"
+                onClick={() => setIsAiModalOpen(false)}
+                disabled={isAiLoading}
+              >
+                Cancel
+              </Button>
+              <button
+                onClick={handleAiImport}
+                disabled={isAiLoading || !aiInputText.trim()}
+                className="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-sm hover:bg-blue-700 hover:shadow-md transition-all disabled:opacity-50 disabled:pointer-events-none"
+              >
+                {isAiLoading ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" /> Extracting
+                    Data...
+                  </>
+                ) : (
+                  <>
+                    <Wand2 size={16} /> Auto-Fill Form
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* HEADER (Hidden when printing) */}
       <Header
         rightControls={
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <div className="hidden md:flex items-center gap-2 mr-2">
               <label className="text-sm font-medium text-zinc-600">
                 Template:
@@ -284,6 +531,18 @@ function BuilderContent() {
                 <option value="image-creative">Image - Studio</option>
               </select>
             </div>
+
+            {isInstallable && (
+              <Button
+                onClick={handleInstallClick}
+                variant="secondary"
+                className="gap-2 shadow-sm border border-zinc-200 hidden sm:flex"
+              >
+                <MonitorDown size={16} />
+                <span className="hidden lg:inline">Install App</span>
+              </Button>
+            )}
+
             <Button onClick={handlePrint} className="gap-2 shadow-md">
               <Download size={16} />
               <span className="hidden sm:inline">Download PDF</span>
@@ -293,7 +552,7 @@ function BuilderContent() {
       />
 
       {/* MOBILE TOGGLE NAVIGATION (Fixed at bottom) */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center bg-zinc-900 rounded-full p-1.5 shadow-2xl lg:hidden print:hidden border border-zinc-700">
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center bg-zinc-900 rounded-full p-1.5 shadow-2xl lg:hidden print:hidden border border-zinc-700">
         <button
           onClick={() => setMobileTab("editor")}
           className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
@@ -324,6 +583,27 @@ function BuilderContent() {
           ${mobileTab === "editor" ? "block" : "hidden lg:block"}`}
         >
           <div className="max-w-xl mx-auto space-y-2">
+            {/* AI AUTO-FILL MAGIC BUTTON */}
+            <div className="bg-gradient-to-r from-blue-600 to-cyan-600 p-1 rounded-2xl shadow-md mb-6 hover:shadow-lg transition-all duration-300">
+              <div className="bg-white rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-base font-bold text-zinc-900 flex items-center gap-2">
+                    <Wand2 size={18} className="text-blue-600" /> AI Auto-Fill
+                  </h3>
+                  <p className="text-xs text-zinc-500 mt-1 max-w-xs">
+                    Paste your old resume text and our AI will organize it
+                    instantly.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setIsAiModalOpen(true)}
+                  className="w-full sm:w-auto bg-zinc-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-sm hover:bg-zinc-800 transition-colors shrink-0"
+                >
+                  Start Import
+                </button>
+              </div>
+            </div>
+
             {/* Mobile Template Selector (Visible only on mobile editor) */}
             <div className="md:hidden bg-white p-4 rounded-lg border border-zinc-200 shadow-sm mb-6 flex flex-col gap-2">
               <label className="text-sm font-semibold text-zinc-700 flex items-center gap-2">
@@ -344,6 +624,17 @@ function BuilderContent() {
                 <option value="image-classic">Image - Classic</option>
                 <option value="image-creative">Image - Studio</option>
               </select>
+
+              {isInstallable && (
+                <Button
+                  onClick={handleInstallClick}
+                  variant="secondary"
+                  className="w-full gap-2 mt-2 border border-zinc-300"
+                >
+                  <MonitorDown size={16} />
+                  Install ProResume App
+                </Button>
+              )}
             </div>
 
             <AccordionItem
@@ -754,6 +1045,7 @@ export default function App() {
     </Suspense>
   );
 }
+
 // --- TEMPLATE RENDERER ---
 const ResumeTemplate = ({ data, template }) => {
   // Helper to safely render newlines
@@ -768,7 +1060,7 @@ const ResumeTemplate = ({ data, template }) => {
   if (template === "modern") {
     return (
       <div className="flex min-h-[29.7cm] text-[13px] leading-relaxed font-sans bg-slate-900 print:bg-slate-900">
-        {/* Sidebar - Using strict width and shrink-0 to prevent print squishing */}
+        {/* Sidebar */}
         <div className="w-[32%] shrink-0 text-slate-100 p-8 print:text-white border-r border-slate-800">
           <div className="mb-8 print:break-inside-avoid">
             <h1 className="text-3xl font-bold tracking-tight uppercase leading-none text-white">
