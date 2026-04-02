@@ -49,7 +49,13 @@ export default function Header({ rightControls }) {
               href="/templates"
               className="hover:text-zinc-900 transition-colors"
             >
-              Templates
+              Resume Templates
+            </a>
+            <a
+              href="/portfolio"
+              className="hover:text-zinc-900 transition-colors"
+            >
+              Portfolio Templates
             </a>
             <a href="/about" className="hover:text-zinc-900 transition-colors">
               About
@@ -103,7 +109,14 @@ export default function Header({ rightControls }) {
             onClick={() => setIsMobileMenuOpen(false)}
             className="text-zinc-600 hover:text-zinc-900 font-medium py-2"
           >
-            Templates
+            Resume Templates
+          </a>
+          <a
+            href="/portfolio"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-zinc-600 hover:text-zinc-900 font-medium py-2"
+          >
+            Portfolio Templates
           </a>
           <a
             href="/about"

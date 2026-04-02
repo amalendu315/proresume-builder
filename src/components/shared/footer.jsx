@@ -137,7 +137,7 @@ export default function Footer() {
                 <GithubIcon size={18} />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/amalendu-pandey-7909241ba"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-zinc-900 rounded-full hover:bg-white hover:text-zinc-950 transition-all duration-300"
@@ -145,7 +145,7 @@ export default function Footer() {
               >
                 <LinkedinIcon size={18} />
               </a>
-              <a
+              {/* <a
                 href="#"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -153,9 +153,9 @@ export default function Footer() {
                 aria-label="Twitter"
               >
                 <TwitterIcon size={18} />
-              </a>
+              </a> */}
               <a
-                href="mailto:amalendu.pandey@example.com"
+                href="mailto:amalendupandey56@gmail.com"
                 className="p-2 bg-zinc-900 rounded-full hover:bg-white hover:text-zinc-950 transition-all duration-300"
                 aria-label="Email"
               >
@@ -167,7 +167,7 @@ export default function Footer() {
 
         {/* Divider & Copyright */}
         <div className="pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-zinc-500">
-          <p>© {currentYear} Amalendu Pandey. All rights reserved.</p>
+          <p>© {currentYear} AuraKode Solutions. All rights reserved.</p>
           <p className="flex items-center gap-1.5">
             Built with <Heart size={14} className="text-red-500 fill-red-500" />{" "}
             using Next.js & Tailwind

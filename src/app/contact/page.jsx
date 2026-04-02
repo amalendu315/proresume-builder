@@ -65,10 +65,10 @@ const ContactPage = () => {
                         Direct Email
                       </p>
                       <a
-                        href="mailto:hello@yourdomain.com"
+                        href="mailto:amalendupandey56@gmail.com"
                         className="text-lg font-medium hover:text-blue-300 transition-colors"
                       >
-                        hello@yourdomain.com
+                        amalendupandey56@gmail.com
                       </a>
                     </div>
                   </div>
