@@ -11,7 +11,7 @@ export const viewport = {
 // 1. DYNAMIC METADATA
 // This tells Google and social media exactly what your site is about
 export const metadata = {
-  metadataBase: new URL("https://proresume-builder.vercel.app"), // TODO: Replace with your actual Vercel domain
+  metadataBase: new URL("https://proresume-builder.vercel.app"), 
   manifest: "/manifest.json", // <-- Added this line for PWA support
   title: {
     default: "ProResume Builder | Free ATS-Friendly Resume Maker",
@@ -20,6 +20,7 @@ export const metadata = {
   description:
     "Create professional, ATS-optimized, and multi-page resumes for free. Choose from premium templates, upload your photo locally for privacy, and instantly download as a PDF.",
   keywords: [
+    "ProResume Builder",
     "resume builder",
     "free resume maker",
     "ATS resume",
@@ -57,7 +58,7 @@ export const metadata = {
     title: "ProResume Builder | Free ATS-Friendly Resume Maker",
     description:
       "Build your perfect resume in minutes. No premium paywalls, totally free.",
-    images: ["/image.png"], // Uses the same image as OpenGraph
+    images: ["/image.png"], 
   },
   robots: {
     index: true,
