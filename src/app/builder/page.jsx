@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, Suspense, useEffect } from "react";
-// import { useSearchParams } from "next/navigation"; // Uncomment for your real app
+import { useSearchParams } from "next/navigation"; // Uncomment for your real app
 import {
   Download,
   Plus,
@@ -24,21 +24,9 @@ import {
   X,
   Loader2,
 } from "lucide-react";
-// import Header from "@/components/shared/header"; // Uncomment for your real app
+import Header from "@/components/shared/header"; // Uncomment for your real app
 
-// --- MOCKS FOR CANVAS PREVIEW ---
-// Please delete these mocks when pasting into your Next.js app!
-const useSearchParams = () => ({ get: (param) => null });
-const Header = ({ rightControls }) => (
-  <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-white border-b border-zinc-200 text-zinc-500 font-medium flex justify-between items-center px-6 print:hidden shadow-sm">
-    <div className="flex items-center gap-2">
-      <LayoutTemplate size={20} className="text-zinc-900" />
-      <span className="font-bold text-zinc-900">ProResume</span>
-    </div>
-    {rightControls && <div className="flex items-center">{rightControls}</div>}
-  </header>
-);
-// --------------------------------
+
 
 // --- CUSTOM BRAND ICONS (Since lucide-react removed them) ---
 const GithubIcon = ({ size = 24, className = "" }) => (
