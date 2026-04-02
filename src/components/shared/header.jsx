@@ -81,7 +81,7 @@ export default function Header({ rightControls }) {
             rightControls
           ) : (
             <a
-              href="https://github.com/amalendu315"
+              href="https://github.com/amalendu315/proresume-builder"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 bg-zinc-100 hover:bg-zinc-200 px-3 py-1.5 rounded-md transition-colors"
