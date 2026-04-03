@@ -11,14 +11,14 @@ export const viewport = {
 // 1. DYNAMIC METADATA
 // This tells Google and social media exactly what your site is about
 export const metadata = {
-  metadataBase: new URL("https://proresume-builder.vercel.app"), 
+  metadataBase: new URL("https://proresume-builder.vercel.app"),
   manifest: "/manifest.json", // <-- Added this line for PWA support
   title: {
     default: "ProResume Builder | Free ATS-Friendly Resume Maker",
     template: "%s | ProResume Builder",
   },
   description:
-    "Create professional, ATS-optimized, and multi-page resumes for free. Choose from premium templates, upload your photo locally for privacy, and instantly download as a PDF.",
+    "Create professional, ATS-optimized resumes and deploy developer-grade portfolio websites for free. Featuring AI auto-fill, local-first privacy, and 1-click Vercel hosting.",
   keywords: [
     // Core Resume Keywords
     "resume builder",
@@ -29,7 +29,7 @@ export const metadata = {
     "resume generator",
     "professional CV",
     "multi-page resume",
-    
+
     // Privacy & Tech Features (Your unique selling points!)
     "AI resume builder",
     "AI auto-fill resume",
@@ -53,7 +53,7 @@ export const metadata = {
     "1-click deploy portfolio",
     "vercel portfolio templates",
     "github portfolio templates",
-    "Next.js portfolio templates"
+    "Next.js portfolio templates",
   ],
   authors: [
     { name: "Amalendu Pandey", url: "https://amalendu-pandey.vercel.app" },
@@ -84,7 +84,7 @@ export const metadata = {
     title: "ProResume Builder | Free ATS-Friendly Resume Maker",
     description:
       "Build your perfect resume in minutes. No premium paywalls, totally free.",
-    images: ["/image.png"], 
+    images: ["/image.png"],
   },
   robots: {
     index: true,
