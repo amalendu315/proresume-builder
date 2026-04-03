@@ -20,14 +20,40 @@ export const metadata = {
   description:
     "Create professional, ATS-optimized, and multi-page resumes for free. Choose from premium templates, upload your photo locally for privacy, and instantly download as a PDF.",
   keywords: [
-    "ProResume Builder",
+    // Core Resume Keywords
     "resume builder",
     "free resume maker",
     "ATS resume",
     "CV builder",
-    "multi-page resume",
-    "tech resume",
+    "create resume online",
+    "resume generator",
     "professional CV",
+    "multi-page resume",
+    
+    // Privacy & Tech Features (Your unique selling points!)
+    "AI resume builder",
+    "AI auto-fill resume",
+    "private resume maker",
+    "local-first resume builder",
+    "open source resume",
+    "JSON resume builder",
+    "no sign up resume builder",
+
+    // Role-Specific (Targeting your specific templates)
+    "software engineer resume",
+    "tech resume",
+    "developer resume templates",
+    "UI/UX designer resume",
+    "data scientist CV",
+    "digital marketer resume",
+
+    // Portfolio & Hosting Keywords (For your new feature)
+    "free portfolio templates",
+    "developer portfolio templates",
+    "1-click deploy portfolio",
+    "vercel portfolio templates",
+    "github portfolio templates",
+    "Next.js portfolio templates"
   ],
   authors: [
     { name: "Amalendu Pandey", url: "https://amalendu-pandey.vercel.app" },
