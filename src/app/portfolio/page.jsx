@@ -22,71 +22,11 @@ import Link from "next/link";
 
 
 
-// --- TEMPLATE DATA BASE ---
 const portfolioTemplates = [
-  // SOFTWARE DEVELOPERS
-  {
-    id: "dev-terminal",
-    category: "Software Developer",
-    title: "Terminal Minimalist",
-    image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    shortDescription:
-      "A dark-themed, code-centric portfolio perfect for backend and full-stack developers.",
-    longDescription:
-      "The Terminal Minimalist template strips away the fluff and focuses entirely on your code, contributions, and technical prowess. Featuring a dark-mode-first design, monospaced typography, and a layout inspired by modern code editors, this template tells recruiters immediately that you are a serious developer.",
-    features: [
-      "Dark mode out of the box",
-      "Dedicated GitHub contribution graph section",
-      "Syntax-highlighted skill showcase",
-      "Lightning fast load times",
-    ],
-    previewUrl: "#",
-    repoUrl: "https://github.com/your-username/template-dev-terminal",
-  },
-  {
-    id: "dev-clean",
-    category: "Software Developer",
-    title: "Clean Architecture",
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    shortDescription:
-      "Bright, airy, and highly professional layout for frontend and enterprise developers.",
-    longDescription:
-      "If you are applying to enterprise companies or design-conscious tech firms, Clean Architecture is your best bet. It utilizes abundant whitespace, clean sans-serif typography, and organized grid layouts to present your complex projects in a highly readable format.",
-    features: [
-      "Bento-box project grid",
-      "Interactive tech stack hover effects",
-      "Prominent contact CTA",
-      "SEO Optimized",
-    ],
-    previewUrl: "#",
-    repoUrl: "https://github.com/your-username/template-dev-clean",
-  },
-  {
-    id: "dev-interactive",
-    category: "Software Developer",
-    title: "The 3D Canvas",
-    image:
-      "https://images.unsplash.com/photo-1618477388954-7852f32655cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    shortDescription:
-      "Show off your creative coding skills with this interactive, WebGL-powered portfolio.",
-    longDescription:
-      "Stand out from the crowd of static websites. The 3D Canvas integrates lightweight Three.js elements to create a memorable, interactive experience without sacrificing performance or accessibility. Perfect for creative developers and creative technologists.",
-    features: [
-      "Interactive 3D hero section",
-      "Scroll-triggered animations",
-      "Custom cursor effects",
-      "Dynamic data loading",
-    ],
-    previewUrl: "#",
-    repoUrl: "https://github.com/your-username/template-dev-3d",
-  },
-
-  // UI/UX DESIGNERS
+  // DESIGN & VISUAL ARTS
   {
     id: "design-gallery",
-    category: "UI/UX Designer",
+    category: "Design & Visual Arts",
     title: "The Masonry Gallery",
     image:
       "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -105,7 +45,7 @@ const portfolioTemplates = [
   },
   {
     id: "design-casestudy",
-    category: "UI/UX Designer",
+    category: "Design & Visual Arts",
     title: "Case Study Focus",
     image:
       "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -124,7 +64,7 @@ const portfolioTemplates = [
   },
   {
     id: "design-brutalist",
-    category: "UI/UX Designer",
+    category: "Design & Visual Arts",
     title: "Neo-Brutalist",
     image:
       "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -142,10 +82,246 @@ const portfolioTemplates = [
     repoUrl: "https://github.com/your-username/template-design-brutalist",
   },
 
-  // DIGITAL MARKETERS
+  // TECH & DEVELOPMENT
+  {
+    id: "dev-terminal",
+    category: "Tech & Development",
+    title: "Terminal Minimalist",
+    image:
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "A dark-themed, code-centric portfolio perfect for backend and full-stack developers.",
+    longDescription:
+      "The Terminal Minimalist template strips away the fluff and focuses entirely on your code, contributions, and technical prowess. Featuring a dark-mode-first design, monospaced typography, and a layout inspired by modern code editors, this template tells recruiters immediately that you are a serious developer.",
+    features: [
+      "Dark mode out of the box",
+      "Dedicated GitHub contribution graph section",
+      "Syntax-highlighted skill showcase",
+      "Lightning fast load times",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-dev-terminal",
+  },
+  {
+    id: "dev-clean",
+    category: "Tech & Development",
+    title: "Clean Architecture",
+    image:
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "Bright, airy, and highly professional layout for frontend and enterprise developers.",
+    longDescription:
+      "If you are applying to enterprise companies or design-conscious tech firms, Clean Architecture is your best bet. It utilizes abundant whitespace, clean sans-serif typography, and organized grid layouts to present your complex projects in a highly readable format.",
+    features: [
+      "Bento-box project grid",
+      "Interactive tech stack hover effects",
+      "Prominent contact CTA",
+      "SEO Optimized",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-dev-clean",
+  },
+  {
+    id: "dev-interactive",
+    category: "Tech & Development",
+    title: "The 3D Canvas",
+    image:
+      "https://images.unsplash.com/photo-1618477388954-7852f32655cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "Show off your creative coding skills with this interactive, WebGL-powered portfolio.",
+    longDescription:
+      "Stand out from the crowd of static websites. The 3D Canvas integrates lightweight Three.js elements to create a memorable, interactive experience without sacrificing performance or accessibility. Perfect for creative developers and creative technologists.",
+    features: [
+      "Interactive 3D hero section",
+      "Scroll-triggered animations",
+      "Custom cursor effects",
+      "Dynamic data loading",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-dev-3d",
+  },
+
+  // WRITING & CONTENT
+  {
+    id: "content-editorial",
+    category: "Writing & Content",
+    title: "The Digital Magazine",
+    image:
+      "https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "Content-first design perfect for journalists, authors, and content strategists.",
+    longDescription:
+      "If your strength is in words, your portfolio should reflect that. This template is inspired by premium digital magazines. It offers a beautiful reading experience, perfect for hosting long-form articles, essays, and published clips.",
+    features: [
+      "Distraction-free reading layout",
+      "Rich text formatting options",
+      "Elegant serif typography",
+      "Category tagging system",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-content-editorial",
+  },
+  {
+    id: "content-copywriter",
+    category: "Writing & Content",
+    title: "The Conversion Copy",
+    image:
+      "https://images.unsplash.com/photo-1455390582262-044cdead27d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "A high-converting portfolio designed to showcase copywriting ROI and ad copy.",
+    longDescription:
+      "Built specifically for direct response and UX copywriters. This template allows you to display the 'Before and After' of your copy, highlight conversion metrics, and embed PDF samples of technical documentation seamlessly.",
+    features: [
+      "Before/After text comparisons",
+      "Metric highlight blocks",
+      "PDF embedding support",
+      "Client logo carousel",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-content-copywriter",
+  },
+  {
+    id: "content-minimalist",
+    category: "Writing & Content",
+    title: "The Typewriter",
+    image:
+      "https://images.unsplash.com/photo-1516383740770-fbcc5ccbece0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "A brutally simple, ultra-minimalist layout that puts absolute focus on your writing.",
+    longDescription:
+      "No flashy animations, no massive header images. The Typewriter template uses beautiful typography and plenty of whitespace to let your words breathe. Perfect for authors and technical writers.",
+    features: [
+      "Ultra-fast loading",
+      "Light/Dark mode toggle",
+      "Print-friendly CSS",
+      "RSS feed generation",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-content-minimalist",
+  },
+
+  // MEDIA & ENTERTAINMENT
+  {
+    id: "media-cinematic",
+    category: "Media & Entertainment",
+    title: "Cinematic Showreel",
+    image:
+      "https://images.unsplash.com/photo-1485846234645-a62644f84728?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "An immersive, video-first portfolio designed for filmmakers, actors, and videographers.",
+    longDescription:
+      "Make an instant impact. This template features a full-screen, autoplaying video background to immediately grab attention. It seamlessly integrates with Vimeo and YouTube to host your high-res showreels without slowing down the site.",
+    features: [
+      "Autoplaying video hero",
+      "Lazy-loaded video embeds",
+      "Dark cinematic theme",
+      "Credits & Cast list formatting",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-media-cinematic",
+  },
+  {
+    id: "media-lookbook",
+    category: "Media & Entertainment",
+    title: "The Lookbook",
+    image:
+      "https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "A stylish, grid-based layout perfect for models, makeup artists, and fashion photographers.",
+    longDescription:
+      "Designed to look like a high-end fashion editorial. The Lookbook organizes your photoshoots into cohesive collections, allowing visitors to easily flip through your different styles, campaigns, and commercial work.",
+    features: [
+      "Collection-based galleries",
+      "Smooth infinite scroll",
+      "Instagram feed integration",
+      "Downloadable comp card/press kit",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-media-lookbook",
+  },
+  {
+    id: "media-horizontal",
+    category: "Media & Entertainment",
+    title: "Studio Horizontal",
+    image:
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "A unique horizontal scrolling experience tailored for professional photographers.",
+    longDescription:
+      "Break away from the standard vertical scroll. This template allows users to pan sideways through your photo series, mimicking the experience of walking through an art gallery. Perfect for storytelling through photography.",
+    features: [
+      "Horizontal scroll mechanics",
+      "Full-height image optimization",
+      "EXIF data hover states",
+      "Client proofing portal link",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-media-horizontal",
+  },
+
+  // ARCHITECTURE & SPACE
+  {
+    id: "arch-blueprint",
+    category: "Architecture & Space",
+    title: "The Blueprint",
+    image:
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "A structured, geometric layout ideal for architects and urban planners.",
+    longDescription:
+      "Show the process from draft to reality. This template provides dedicated sections to display early sketches, AutoCAD blueprints, and final structural photographs side-by-side to highlight your comprehensive vision.",
+    features: [
+      "Geometric grid layout",
+      "Draft vs Reality comparison slider",
+      "Project specs data tables",
+      "Clean, structural typography",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-arch-blueprint",
+  },
+  {
+    id: "arch-spatial",
+    category: "Architecture & Space",
+    title: "Spatial Immersion",
+    image:
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "A highly visual template focused on large-scale interior and exterior renderings.",
+    longDescription:
+      "Let the space speak for itself. Featuring edge-to-edge photography and support for 360-degree panoramic embeds, this template drops potential clients right into the spaces you have designed.",
+    features: [
+      "Edge-to-edge photography",
+      "360-degree viewer integration",
+      "Subtle parallax scrolling",
+      "Minimalist overlay menus",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-arch-spatial",
+  },
+  {
+    id: "arch-textures",
+    category: "Architecture & Space",
+    title: "Materials & Light",
+    image:
+      "https://images.unsplash.com/photo-1600607687931-ce8e11a12931?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "Detail-oriented layout designed specifically for interior designers and decorators.",
+    longDescription:
+      "Interior design is all about the details. This template allows you to break down your projects into mood boards, color palettes, and material selections alongside the final staged room photographs.",
+    features: [
+      "Interactive mood board layouts",
+      "Color palette extraction",
+      "Before/After staging sliders",
+      "Vendor/Supplier credit lists",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-arch-textures",
+  },
+
+  // MARKETING & STRATEGY
   {
     id: "marketing-funnel",
-    category: "Digital Marketer",
+    category: "Marketing & Strategy",
     title: "The Conversion Funnel",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
@@ -163,32 +339,13 @@ const portfolioTemplates = [
     repoUrl: "https://github.com/your-username/template-marketing-funnel",
   },
   {
-    id: "marketing-editorial",
-    category: "Digital Marketer",
-    title: "The Editorial",
-    image:
-      "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    shortDescription:
-      "Content-first design perfect for SEO specialists, copywriters, and content marketers.",
-    longDescription:
-      "If your strength is in words, your portfolio should reflect that. The Editorial template is inspired by premium digital magazines. It offers a beautiful reading experience, perfect for hosting long-form articles, SEO case studies, and content strategy breakdowns.",
-    features: [
-      "Distraction-free reading layout",
-      "Rich text formatting options",
-      "Newsletter signup integration",
-      "Category tagging system",
-    ],
-    previewUrl: "#",
-    repoUrl: "https://github.com/your-username/template-marketing-editorial",
-  },
-  {
     id: "marketing-social",
-    category: "Digital Marketer",
+    category: "Marketing & Strategy",
     title: "The Campaign Grid",
     image:
       "https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     shortDescription:
-      "A highly visual, vibrant grid layout designed for social media and brand managers.",
+      "A highly visual, vibrant grid layout designed for social media and PR managers.",
     longDescription:
       "Social media managers need to show visual impact alongside engagement metrics. The Campaign Grid mimics the feel of a curated social feed but allows you to flip each 'post' to reveal the strategy and analytics behind the campaign.",
     features: [
@@ -200,75 +357,96 @@ const portfolioTemplates = [
     previewUrl: "#",
     repoUrl: "https://github.com/your-username/template-marketing-social",
   },
-
-  // DATA SCIENTISTS
   {
-    id: "data-dashboard",
-    category: "Data Scientist",
-    title: "The Analytics Dashboard",
+    id: "marketing-growth",
+    category: "Marketing & Strategy",
+    title: "Growth Dashboard",
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     shortDescription:
-      "A data-heavy layout that mimics a BI dashboard, perfect for showcasing visualizations.",
+      "A data-driven layout designed to showcase SEO rankings, traffic growth, and ROI.",
     longDescription:
-      "Show, don't just tell. The Analytics Dashboard template is structured to host embedded charts, graphs, and data visualizations alongside your project summaries. It gives a highly analytical, professional vibe right from the first glance.",
+      "For the analytical marketer. This template integrates beautiful, interactive charts and graphs to visually demonstrate the business growth you've achieved. Perfect for performance marketers, SEO specialists, and growth hackers.",
     features: [
-      "Built-in Chart.js/Recharts wrappers",
-      "Dark/Light mode toggle",
-      "KPI highlight cards",
-      "Dataset download links",
+      "Interactive data visualizations",
+      "Timeline growth charts",
+      "Case study metric highlights",
+      "Clean, corporate aesthetic",
     ],
     previewUrl: "#",
-    repoUrl: "https://github.com/your-username/template-data-dashboard",
+    repoUrl: "https://github.com/your-username/template-marketing-growth",
+  },
+
+  // CONSULTING & EVENTS
+  {
+    id: "consult-keynote",
+    category: "Consulting & Events",
+    title: "The Keynote Speaker",
+    image:
+      "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    shortDescription:
+      "A commanding layout built for public speakers, thought leaders, and coaches.",
+    longDescription:
+      "Establish immediate authority. This template focuses heavily on your personal brand, featuring large areas for stage photography, embedded speaking sizzle reels, and a streamlined booking form for event organizers.",
+    features: [
+      "Prominent booking CTA",
+      "Video sizzle reel section",
+      "Topic/Workshop breakdown cards",
+      "Press & Media feature logos",
+    ],
+    previewUrl: "#",
+    repoUrl: "https://github.com/your-username/template-consult-keynote",
   },
   {
-    id: "data-academic",
-    category: "Data Scientist",
-    title: "The Researcher",
+    id: "consult-corporate",
+    category: "Consulting & Events",
+    title: "Corporate Trust",
     image:
-      "https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1556761175-5973dc0f32d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     shortDescription:
-      "A clean, LaTeX-inspired layout focused on publications, methodologies, and findings.",
+      "A clean, highly professional design for business consultants and strategists.",
     longDescription:
-      "For data scientists with strong academic or research backgrounds. This template prioritizes clean typography, structured methodology breakdowns, and organized lists of publications, patents, or whitepapers. It brings academic rigor to the modern web.",
+      "When consulting for B2B clients, trust is everything. This template is designed to look like a boutique agency website. It relies on crisp typography, structured service offerings, and prominent client testimonials to build credibility.",
     features: [
-      "LaTeX-inspired typography",
-      "Publication/Citation formatting",
-      "MathJax/Equation support",
-      "PDF export ready",
+      "Service offering grids",
+      "In-depth case study pages",
+      "Prominent testimonial blocks",
+      "Professional, muted color palettes",
     ],
     previewUrl: "#",
-    repoUrl: "https://github.com/your-username/template-data-academic",
+    repoUrl: "https://github.com/your-username/template-consult-corporate",
   },
   {
-    id: "data-storyteller",
-    category: "Data Scientist",
-    title: "Data Storyteller",
+    id: "consult-events",
+    category: "Consulting & Events",
+    title: "Event Highlight",
     image:
-      "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     shortDescription:
-      "A scrollytelling format that guides visitors step-by-step through your data models.",
+      "A vibrant, celebratory portfolio for event planners and experiential designers.",
     longDescription:
-      "Great data science requires great storytelling. This template uses a 'scrollytelling' layout, where the user scrolls to read your analysis while visualizations stick to the screen and update dynamically based on the narrative context.",
+      "Showcase the magic of your events. This template features expansive photo galleries, timeline breakdowns of event execution, and sections to highlight vendor collaborations and guest experiences.",
     features: [
-      "Sticky visualization panels",
-      "Scroll-triggered text blocks",
-      "Interactive model demos",
-      "Clean, modern aesthetics",
+      "Dynamic photo carousels",
+      "Event stat counters (guests, scale)",
+      "Vendor partner links",
+      "Festive, customizable styling",
     ],
     previewUrl: "#",
-    repoUrl: "https://github.com/your-username/template-data-storyteller",
+    repoUrl: "https://github.com/your-username/template-consult-events",
   },
 ];
 
 const categories = [
   "All",
-  "Software Developer",
-  "UI/UX Designer",
-  "Digital Marketer",
-  "Data Scientist",
+  "Design & Visual Arts",
+  "Tech & Development",
+  "Writing & Content",
+  "Media & Entertainment",
+  "Architecture & Space",
+  "Marketing & Strategy",
+  "Consulting & Events",
 ];
-
 export default function PortfoliosPage() {
   const [activeStep, setActiveStep] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("All");
